@@ -1,0 +1,68 @@
+version: '2'
+
+networks:
+    tmpnetwork:
+        external: true
+
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - "8086:80"
+        volumes:
+            - ./:/var/www/dev
+            - ./.docker/nginx/conf.d:/etc/nginx/conf.d/
+        networks:
+            - tmpnetwork
+
+#    php:
+#        build: ./.docker/php-fpm72
+#        volumes:
+#            - ./:/var/www/dev
+#        ports:
+#            - "9000:9000"
+#        networks:
+#          - tmpnetwork
+
+    php:
+        build: ./.docker/php-fpm73
+        volumes:
+            - ./:/var/www/dev
+        ports:
+            - "9000:9000"
+        networks:
+            - tmpnetwork
+
+#node:
+#    build: ./.docker/node
+#    volumes:
+#        - ./:/var/www/dev
+
+#mysql:
+#    image: mysql:5.7
+#    volumes:
+#        - "./mysqldata/db:/var/lib/mysql"
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 123
+#      MYSQL_DATABASE: cmv
+#      MYSQL_USER: homestead
+#      MYSQL_PASSWORD: secret
+#    ports:
+#        - "3306:3306"
+
+#beanstalkd:
+#    image: agaveapi/beanstalkd
+#    ports:
+#        - "11300:11300"
+#redis:
+#    image: redis
+#    ports:
+#        - "6379:6379"
+#    volumes:
+#        - "./redisdata/db:/data"
+
+# selenium:
+#     image: selenium/standalone-chrome
+#     ports:
+#       - 4444:4444

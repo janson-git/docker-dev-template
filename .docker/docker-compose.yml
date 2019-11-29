@@ -1,0 +1,54 @@
+web:
+    image: nginx:latest
+    ports:
+        - "80:80"
+    volumes:
+        - /home/daniel/dev:/var/www/dev
+        - ./nginx/conf.d/test.conf:/etc/nginx/conf.d/default.conf
+    net: "host"
+php:
+    build: ./php-fpm73
+    volumes:
+        - /home/daniel/dev:/var/www/dev
+    ports:
+        - "9000:9000"
+    net: "host"
+phyton:
+    build: ./phyton
+    volumes:
+        - /home/daniel/dev:/var/www/dev
+    net: "host"
+    tty: true
+node:
+    build: ./node
+    volumes:
+        - /home/daniel/dev:/var/www/dev
+    net: "host"
+mysql:
+    image: mysql:5.7
+    volumes:
+        - "./mysqldata/db:/var/lib/mysql"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: cmv
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+    ports:
+        - "3306:3306"
+beanstalkd:
+    image: agaveapi/beanstalkd
+    ports:
+        - "11300:11300"
+redis:
+    image: redis
+    ports:
+        - "6379:6379"
+    volumes:
+        - "./redisdata/db:/data"
+
+# selenium:
+#     image: selenium/standalone-chrome
+#     ports:
+#       - 4444:4444
+#     net: "host"
