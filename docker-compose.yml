@@ -24,6 +24,7 @@ services:
 #        networks:
 #          - tmpnetwork
 
+# PHP 7.3
     php:
         build: ./.docker/php-fpm73
         volumes:
@@ -32,6 +33,16 @@ services:
             - "9000:9000"
         networks:
             - tmpnetwork
+
+# PHP 7.4
+#    php:
+#        build: ./.docker/php-fpm74
+#        volumes:
+#            - ./:/var/www/dev
+#        ports:
+#            - "9000:9000"
+#        networks:
+#            - tmpnetwork
 
 #node:
 #    build: ./.docker/node
