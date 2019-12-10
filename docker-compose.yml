@@ -1,9 +1,5 @@
 version: '2'
 
-networks:
-    tmpnetwork:
-        external: true
-
 services:
     web:
         image: nginx:latest
@@ -12,8 +8,6 @@ services:
         volumes:
             - ./:/var/www/dev
             - ./.docker/nginx/conf.d:/etc/nginx/conf.d/
-        networks:
-            - tmpnetwork
 
 #    php:
 #        build: ./.docker/php-fpm72
@@ -21,8 +15,6 @@ services:
 #            - ./:/var/www/dev
 #        ports:
 #            - "9000:9000"
-#        networks:
-#          - tmpnetwork
 
 # PHP 7.3
     php:
@@ -31,8 +23,6 @@ services:
             - ./:/var/www/dev
         ports:
             - "9000:9000"
-        networks:
-            - tmpnetwork
 
 # PHP 7.4
 #    php:
@@ -41,8 +31,6 @@ services:
 #            - ./:/var/www/dev
 #        ports:
 #            - "9000:9000"
-#        networks:
-#            - tmpnetwork
 
 #node:
 #    build: ./.docker/node
