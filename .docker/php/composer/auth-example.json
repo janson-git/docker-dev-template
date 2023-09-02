@@ -1,0 +1,5 @@
+{
+  "github-oauth": {
+    "github.com": "place your token here and rename file to auth.json"
+  }
+}

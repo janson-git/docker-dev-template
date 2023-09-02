@@ -1,41 +1,29 @@
 version: '2'
 
 services:
-    web:
+    nginx:
         image: nginx:latest
         ports:
-            - "8086:80"
+            - "8086:80" # client
+            - "8087:81" # app
         volumes:
-            - ./:/var/www/dev
             - ./.docker/nginx/conf.d:/etc/nginx/conf.d/
+            - ./client:/var/www
+        links:
+            - app
 
-#    php:
-#        build: ./.docker/php-fpm72
-#        volumes:
-#            - ./:/var/www/dev
-#        ports:
-#            - "9000:9000"
-
-# PHP 7.3
-    php:
-        build: ./.docker/php-fpm73
+    app:
+        build: ./.docker/php
         volumes:
-            - ./:/var/www/dev
+            - ./app:/app
+            - .docker/php/.bashrc:/var/www/.bashrc
         ports:
             - "9000:9000"
 
-# PHP 7.4
-#    php:
-#        build: ./.docker/php-fpm74
+#    client:
+#        build: ./.docker/node
 #        volumes:
-#            - ./:/var/www/dev
-#        ports:
-#            - "9000:9000"
-
-#node:
-#    build: ./.docker/node
-#    volumes:
-#        - ./:/var/www/dev
+#            - ./client:/app
 
 #mysql:
 #    image: mysql:5.7

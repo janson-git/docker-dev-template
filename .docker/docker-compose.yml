@@ -7,7 +7,7 @@ web:
         - ./nginx/conf.d/test.conf:/etc/nginx/conf.d/default.conf
     net: "host"
 php:
-    build: ./php-fpm73
+    build: ./php
     volumes:
         - /home/daniel/dev:/var/www/dev
     ports:

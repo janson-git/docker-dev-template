@@ -15,8 +15,22 @@ https://github.com/Yelp/docker-compose/blob/master/docs/install.md
 ```
 docker-compose up -d
 ```
+Docker will build container from php image and install php extensions.
 
-Open you browser by `localhost:8086` (docker-compose.yml port assigned in section `web`) and it would work now!
+After built and start open you browser by `localhost:8087` (docker-compose.yml port assigned in section `app`) and it would work now!
+
+You can also use `client` directory to create your frontend client here.
+Nginx config already configured to route `localhost:8086` to client/public/index.html file.
+
+Do not forget bind `build` directory for nginx of your client if you will use it.
+Just change:
+1. `docker-compose.yml` volumes for `nginx` section to bind build directory, like this:
+```
+    volumes:
+        - ./.docker/nginx/conf.d:/etc/nginx/conf.d/
+        - ./client/build:/var/www/public  # here a new client content binding
+```
+2. `.docker/nginx/conf.d/client.conf` should point to correct root dir and index file
 
 ---
 # Шаблон docker-compose для разработчика
@@ -36,5 +50,21 @@ https://github.com/Yelp/docker-compose/blob/master/docs/install.md
 ```
 docker-compose up -d
 ```
+Здесь сначала докер будет собирать контейнер из образа, устанавливать расширения для php.
 
-Открываем в браузере `localhost:8086` (docker-compose.yml прописан порт в секции `web`) и это уже должно работать!
+После того как всё будет запущено, открываем в браузере `localhost:8086` 
+(docker-compose.yml прописан порт в секции `app`) и это уже должно работать!
+
+Вы также можете использовать директорию `client` для создания своего фронтенд-клиента.
+Nginx уже сконфигурирован чтобы перенаправлять запросы с `localhost:8086` на файл client/public/index.html
+
+Не забудьте привязать свою директорию `build` клиента в nginx если будете использовать эту функциональность.
+
+Просто замените:
+1. Проброс содержимого билда в `docker-compose.yml` для `nginx` , как-то так:
+```
+    volumes:
+        - ./.docker/nginx/conf.d:/etc/nginx/conf.d/
+        - ./client/build:/var/www/public  # вот это проброс билда внутрь nginx
+```
+2. `.docker/nginx/conf.d/client.conf` должен указывать на корректную root директрию и index.html файл внутри контейнера nginx
